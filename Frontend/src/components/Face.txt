@@ -1,0 +1,162 @@
+import { useEffect, useState } from "react";
+
+export default function Avatar({ speaking = false }) {
+  const [blink, setBlink] = useState(false);
+  const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
+
+  /* -------- Faster Natural Blink -------- */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBlink(true);
+      setTimeout(() => setBlink(false), 100);
+    }, 2000 + Math.random() * 1000); // 🔥 more frequent blink
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /* -------- Faster Eye Movement -------- */
+  useEffect(() => {
+    if (!speaking) {
+      setEyeOffset({ x: 0, y: 0 });
+      return;
+    }
+
+    const interval = setInterval(() => {
+      const x = Math.random() * 3 - 1.5;
+      const y = Math.random() * 3 - 1.5;
+      setEyeOffset({ x, y });
+    }, 150); // 🔥 faster movement
+
+    return () => clearInterval(interval);
+  }, [speaking]);
+
+  return (
+    <div className="flex items-center justify-center w-full h-full">
+
+      {/* OUTER CAPSULE SHELL */}
+      <div
+        style={{
+          width: "420px",
+          height: "360px", // 🔥 increased height
+          background: "linear-gradient(to bottom, #f8f8f8, #e6e6e6)",
+          borderRadius: "170px",
+          boxShadow: "0 30px 70px rgba(0,0,0,0.25)",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+
+        {/* EARS */}
+{/* EARS */}
+<div
+  style={{
+    position: "absolute",
+    left: "-35px",
+    width: "65px",       // 🔥 smaller
+    height: "120px",     // 🔥 smaller
+     background: "linear-gradient(to bottom, #f8f8f8, #e6e6e6)",
+    borderRadius: "70px",
+    boxShadow: "inset 0 6px 12px rgba(0,0,0,0.08)",
+  }}
+/>
+
+<div
+  style={{
+    position: "absolute",
+    right: "-35px",
+    width: "65px",
+    height: "120px",
+     background: "linear-gradient(to bottom, #f8f8f8, #e6e6e6)",
+    borderRadius: "70px",
+    boxShadow: "inset 0 6px 12px rgba(0,0,0,0.08)",
+  }}
+/>
+
+        {/* INNER SCREEN */}
+        <div
+          style={{
+            width: "360px",
+            height: "300px",
+            background: "linear-gradient(to bottom, #000000, rgb(0, 0, 0))",
+            borderRadius: "120px",
+            position: "relative",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {/* Gloss Reflection */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              width: "100%",
+              height: "50%",
+              background: "white",
+              opacity: 0.05,
+              borderTopLeftRadius: "120px",
+              borderTopRightRadius: "120px",
+            }}
+          />
+
+          {/* EYES */}
+          <div style={{ display: "flex", gap: "90px", marginBottom: "110px" }}>
+            {[0, 1].map((i) => (
+              <div
+                key={i}
+                style={{
+                  width: "70px",
+                  height: blink ? "8px" : "70px",
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(circle at 35% 35%, #ffffff 50%, #dddddd 90%)",
+                  boxShadow:
+                    "0 0 30px rgba(255,255,255,0.9), 0 0 60px rgb(0, 0, 0)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.12s ease",
+                }}
+              >
+                {!blink && (
+                  <div
+                    style={{
+                      width: "10px",
+                      height: "10px",
+                      borderRadius: "50%",
+                      background: "white",
+                      transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 🔥 FIXED POSITION SMILE */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "55px", // 🔥 controls vertical placement
+              width: "140px",
+              height: "70px",
+              background: "white",
+              borderBottomLeftRadius: "90px",
+              borderBottomRightRadius: "90px",
+              borderTopLeftRadius: "0",
+              borderTopRightRadius: "0",
+              boxShadow:
+                "0 0 25px rgba(255,255,255,0.9), 0 0 50px rgba(0, 0, 0, 0.6)",
+              transform: speaking ? "scale(1.05)" : "scale(1)",
+              transition: "all 0.25s ease",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

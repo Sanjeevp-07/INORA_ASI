@@ -1,0 +1,29 @@
+Here's your upgraded EEG Recorder. Here's what's new compared to your original script:
+Recording system
+
+Press R to start recording — it auto-creates a timestamped CSV file like eeg_recordings/eeg_20250329_143022.csv in the same folder as the script
+Press R again to stop — it prints exactly how many samples were saved and the filename
+Every raw sample (timestamp + ch1/ch2/ch3) gets written live as data comes in, so you never lose data even if you close the window
+
+Visual warning system
+
+Green ● SIGNAL OK — all channels below 80 µV, everything normal
+Yellow ◆ CAUTION: >80µV — something's off, maybe movement artifact or loose electrode
+Red ⚠ HIGH AMPLITUDE! — above 150 µV, the entire background starts blinking red so you can't miss it — could be dead battery, bad contact, or EMI
+Dashed reference lines drawn on the graph at ±80 µV (yellow) and ±150 µV (red) so you can visually see where signals are relative to thresholds
+
+Status bar at the bottom
+
+Live/No Data dot with label
+Actual sample rate readout
+● REC blinking indicator with a running MM:SS timer and sample count while recording
+
+How to use:
+
+Run the script, verify graph is stable and green
+Press R to start recording your session
+Watch the warning colors — if it goes yellow/red, check your electrodes/battery
+Press R again to stop, your CSV is ready for analysis
+Press Q or close the window to quit
+
+The thresholds (WARN_YELLOW = 80, WARN_RED = 150) are at the top — adjust them to whatever makes sense for your setup.

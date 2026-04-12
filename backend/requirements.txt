@@ -1,0 +1,21 @@
+fastapi
+uvicorn
+numpy
+scipy
+mne
+scikit-learn
+sqlalchemy
+pydantic
+openai-whisper
+pyttsx3
+soundfile
+python-multipart
+websockets
+pandas
+joblib
+sounddevice
+pydub
+loguru
+edge-tts
+
+openai-whisper soundfile 
