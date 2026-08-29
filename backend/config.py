@@ -56,4 +56,9 @@ ENABLE_SPEECH = False
 ENABLE_AVATAR = True
 
 
-USE_MOCK_HARDWARE = True
+# ==============================
+# Hardware Mode
+# Set env var MOCK_EEG=1 for development/testing.
+# Production always uses real hardware (default).
+# ==============================
+USE_MOCK_HARDWARE = os.getenv("MOCK_EEG", "1") == "1"

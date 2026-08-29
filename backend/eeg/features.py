@@ -13,7 +13,8 @@ class FeatureExtractor:
     def bandpower(self, data, fmin, fmax):
         freqs, psd = welch(data, fs=self.fs, nperseg=256)
         idx = np.logical_and(freqs >= fmin, freqs <= fmax)
-        return np.trapz(psd[idx], freqs[idx])
+        trapz_fn = getattr(np, "trapezoid", getattr(np, "trapz", None))
+        return trapz_fn(psd[idx], freqs[idx])
 
     def extract(self, eeg_data: np.ndarray):
         """

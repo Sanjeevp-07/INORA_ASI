@@ -183,7 +183,7 @@ const MicRecorder = ({ onQuestion, isPlaying }) => {
         <span style={{
           fontSize:      11,
           letterSpacing: 2,
-          fontFamily:    "monospace",
+          fontFamily:    "inherit",
           color:         dotColor,
           fontWeight:    600,
           textTransform: "uppercase",
@@ -217,7 +217,7 @@ const MicRecorder = ({ onQuestion, isPlaying }) => {
       }}>
         <span style={{
           fontSize:      11,
-          fontFamily:    "monospace",
+          fontFamily:    "inherit",
           letterSpacing: 2,
           color:         status === "recording" ? "#ff4444" : "#4a6080",
           fontWeight:    600,

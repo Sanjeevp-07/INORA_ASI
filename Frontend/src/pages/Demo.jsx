@@ -42,7 +42,7 @@ const LIGHT = {
 let C = DARK;
 
 const Label = ({ children, style }) => (
-  <span style={{ fontSize: 13, letterSpacing: 3, color: C.muted, fontFamily: "monospace", textTransform: "uppercase", fontWeight: 600, ...style }}>
+  <span style={{ fontSize: 15, letterSpacing: 2, color: C.muted, fontFamily: "inherit", textTransform: "uppercase", fontWeight: 600, ...style }}>
     {children}
   </span>
 );
@@ -235,9 +235,9 @@ function BrainMRI({ rmsVals, lightMode }) {
 
         const nL = ELECTRODES[mi].name, uL = uv.toFixed(1) + "µV";
         const lx = tx + nx * 8, ly = ty + ny * 8;
-        ctx.font = "bold 8px 'Courier New',monospace";
+        ctx.font = "bold 10px 'Courier New',monospace";
         const nw = ctx.measureText(nL).width;
-        ctx.font = "7px 'Courier New',monospace";
+        ctx.font = "9px 'Courier New',monospace";
         const uw = ctx.measureText(uL).width;
         const bW = Math.max(nw, uw) + 10, bH = 22;
         const bX = dir.dx >= 0 ? lx - 2 : lx - bW + 2;
@@ -248,22 +248,22 @@ function BrainMRI({ rmsVals, lightMode }) {
         ctx.beginPath();
         if (ctx.roundRect) ctx.roundRect(bX, bY, bW, bH, 3); else ctx.rect(bX, bY, bW, bH);
         ctx.fill(); ctx.stroke();
-        ctx.font = "bold 8px 'Courier New',monospace";
+        ctx.font = "bold 10px 'Courier New',monospace";
         ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 4;
         ctx.fillText(nL, bX + bW/2, bY + 7); ctx.shadowBlur = 0;
-        ctx.font = "7px 'Courier New',monospace";
+        ctx.font = "9px 'Courier New',monospace";
         ctx.fillStyle = "#aabbd0";
         ctx.fillText(uL, bX + bW/2, bY + 16);
         ctx.textBaseline = "alphabetic";
       });
 
-      ctx.font = "6px 'Courier New',monospace"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+      ctx.font = "8px 'Courier New',monospace"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
       ctx.fillStyle = "rgba(155,170,192,0.38)";
       ctx.fillText("kV:120  mA:228", 6, 13);
       ctx.fillText("AXIAL  5.0mm",   6, 22);
       ctx.fillText("fMRI  BOLD+T2",  6, 31);
-      ctx.font = "bold 10px 'Courier New',monospace"; ctx.textAlign = "center";
+      ctx.font = "bold 12px 'Courier New',monospace"; ctx.textAlign = "center";
       ctx.fillStyle = "rgba(165,180,205,0.42)";
       ctx.fillText("L", W * 0.06, cy + 5);
       ctx.fillText("R", W * 0.94, cy + 5);
@@ -289,8 +289,8 @@ function ConfidenceBar({ value=0, lightMode=false }) {
   return (
     <div style={{width:"100%"}}>
       <div style={{display:"flex", justifyContent:"space-between", marginBottom:7}}>
-        <span style={{fontSize:13, letterSpacing:2, color:C.muted, fontFamily:"monospace", fontWeight:600}}>CONFIDENCE</span>
-        <span style={{fontSize:15, color:col, fontFamily:"monospace", fontWeight:700}}>{Math.round(pct*100)}%</span>
+        <span style={{fontSize:15, letterSpacing:2, color:C.muted, fontFamily:"monospace", fontWeight:600}}>CONFIDENCE</span>
+        <span style={{fontSize:17, color:col, fontFamily:"monospace", fontWeight:700}}>{Math.round(pct*100)}%</span>
       </div>
       <div style={{height:8, background: lightMode ? "rgba(0,0,40,0.08)" : "rgba(0,0,0,0.5)", borderRadius:4, overflow:"hidden", border:`1px solid ${C.border}`}}>
         <div style={{
@@ -314,7 +314,7 @@ function SessionTimer({ running }) {
   },[running]);
   const p = n => String(n).padStart(2,"0");
   return (
-    <span style={{fontFamily:"monospace", fontSize:13, color:C.green, letterSpacing:2, fontWeight:600}}>
+    <span style={{fontFamily:"monospace", fontSize:15, color:C.green, letterSpacing:2, fontWeight:600}}>
       {p(Math.floor(s/3600))}:{p(Math.floor((s%3600)/60))}:{p(s%60)}
     </span>
   );
@@ -345,7 +345,7 @@ function ActionLog({ logs, lightMode=false }) {
   return (
     <div style={{height:"100%",overflowY:"auto",display:"flex",flexDirection:"column",gap:3,scrollbarWidth:"none"}}>
       {logs.length===0 && (
-        <div style={{color:C.dim,fontSize:11,textAlign:"center",marginTop:24,letterSpacing:2,fontWeight:600}}>AWAITING CONNECTION</div>
+        <div style={{color:C.dim,fontSize:13,textAlign:"center",marginTop:24,letterSpacing:2,fontWeight:600}}>AWAITING CONNECTION</div>
       )}
       {logs.map((l,i)=>(
         <div key={i} style={{
@@ -355,9 +355,9 @@ function ActionLog({ logs, lightMode=false }) {
           borderLeft:`2px solid ${l.color}44`,
           animation:"fadeIn 0.3s ease",
         }}>
-          <span style={{fontSize:9,color:C.muted,fontFamily:"monospace",whiteSpace:"nowrap",fontWeight:500}}>{l.time}</span>
-          <span style={{fontSize:11,color:l.color,fontFamily:"monospace",letterSpacing:1,whiteSpace:"nowrap",fontWeight:700}}>[{l.tag}]</span>
-          <span style={{fontSize:10,color:C.text,lineHeight:1.4,fontWeight:500}}>{l.msg}</span>
+          <span style={{fontSize:11,color:C.muted,fontFamily:"monospace",whiteSpace:"nowrap",fontWeight:500}}>{l.time}</span>
+          <span style={{fontSize:13,color:l.color,fontFamily:"monospace",letterSpacing:1,whiteSpace:"nowrap",fontWeight:700}}>[{l.tag}]</span>
+          <span style={{fontSize:12,color:C.text,lineHeight:1.4,fontWeight:500}}>{l.msg}</span>
         </div>
       ))}
       <div ref={endRef}/>
@@ -384,12 +384,12 @@ function ReactiveIcon({ emoji, label, active, lightMode=false }) {
           background: active ? `${C.green}14` : lightMode ? "rgba(0,0,40,0.06)" : "rgba(0,0,0,0.3)",
           border:`1.5px solid ${active?C.green:C.dim}`,
           display:"flex",alignItems:"center",justifyContent:"center",
-          fontSize:22,
+          fontSize:24,
           boxShadow: active ? `0 0 14px ${C.green}44` : "none",
           transition:"all 0.3s",
         }}>{emoji}</div>
       </div>
-      <span style={{fontSize:11,letterSpacing:2,color:active?C.green:C.dim,fontFamily:"monospace",fontWeight:600}}>{label}</span>
+      <span style={{fontSize:13,letterSpacing:2,color:active?C.green:C.dim,fontFamily:"monospace",fontWeight:600}}>{label}</span>
     </div>
   );
 }
@@ -449,17 +449,17 @@ function PipelineTracker({ connected, data, questionActive, isSpeaking, lightMod
 
   return (
     <div style={{
-      padding:"6px 16px 8px",
+      padding:"8px 18px 10px",
       borderBottom:`1px solid ${C.border}`,
       background: lightMode ? "rgba(220,228,240,0.6)" : "rgba(6,9,18,0.6)",
       flexShrink:0,
     }}>
-      <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6}}>
+      <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8}}>
         <Label>Pipeline Status</Label>
         {collecting && (
-          <div style={{display:"flex", alignItems:"center", gap:6}}>
-            <span style={{fontSize:11, color:C.yellow, fontFamily:"monospace", letterSpacing:2, fontWeight:600}}>COLLECTING EEG…</span>
-            <div style={{width:80, height:3, background: lightMode ? "rgba(0,0,40,0.1)" : "rgba(0,0,0,0.4)", borderRadius:2, overflow:"hidden"}}>
+          <div style={{display:"flex", alignItems:"center", gap:8}}>
+            <span style={{fontSize:13, color:C.yellow, fontFamily:"monospace", letterSpacing:2, fontWeight:600}}>COLLECTING EEG…</span>
+            <div style={{width:100, height:5, background: lightMode ? "rgba(0,0,40,0.1)" : "rgba(0,0,0,0.4)", borderRadius:2, overflow:"hidden"}}>
               <div style={{
                 height:"100%", width:`${collectPct*100}%`,
                 background:`linear-gradient(90deg,${C.yellow},${C.green})`,
@@ -467,7 +467,7 @@ function PipelineTracker({ connected, data, questionActive, isSpeaking, lightMod
                 boxShadow:`0 0 6px ${C.yellow}`,
               }}/>
             </div>
-            <span style={{fontSize:11,color:C.yellow,fontFamily:"monospace",fontWeight:600}}>{Math.round(collectPct*100)}%</span>
+            <span style={{fontSize:13,color:C.yellow,fontFamily:"monospace",fontWeight:600}}>{Math.round(collectPct*100)}%</span>
           </div>
         )}
       </div>
@@ -480,8 +480,8 @@ function PipelineTracker({ connected, data, questionActive, isSpeaking, lightMod
           return (
             <React.Fragment key={s.id}>
               <div style={{
-                display:"flex", flexDirection:"column", alignItems:"center", gap:2,
-                padding:"4px 6px", borderRadius:6, flex:1,
+                display:"flex", flexDirection:"column", alignItems:"center", gap:4,
+                padding:"6px 8px", borderRadius:6, flex:1,
                 background: bgColor,
                 border:`1px solid ${isActive ? C.cyan+"44" : isDone ? C.green+"22" : "transparent"}`,
                 boxShadow: isActive ? `0 0 12px ${C.cyan}22` : "none",
@@ -495,16 +495,16 @@ function PipelineTracker({ connected, data, questionActive, isSpeaking, lightMod
                     animation:"pulse 1.2s ease-in-out infinite",
                   }}/>
                 )}
-                <span style={{fontSize:16, filter: isActive||isDone ? "none" : "grayscale(1) opacity(0.3)"}}>{s.icon}</span>
-                <span style={{fontSize:11, color, fontFamily:"monospace", letterSpacing:1, fontWeight: isActive?700:600}}>{s.label}</span>
-                <span style={{fontSize:9, color: isActive?C.text:C.dim, fontFamily:"monospace", textAlign:"center", lineHeight:1.3, fontWeight:500}}>{s.desc}</span>
+                <span style={{fontSize:18, filter: isActive||isDone ? "none" : "grayscale(1) opacity(0.3)"}}>{s.icon}</span>
+                <span style={{fontSize:13, color, fontFamily:"monospace", letterSpacing:1, fontWeight: isActive?700:600}}>{s.label}</span>
+                <span style={{fontSize:11, color: isActive?C.text:C.dim, fontFamily:"monospace", textAlign:"center", lineHeight:1.3, fontWeight:500}}>{s.desc}</span>
                 {isDone && (
-                  <div style={{position:"absolute", top:3, right:5, fontSize:9, color:C.green, fontWeight:700}}>✓</div>
+                  <div style={{position:"absolute", top:3, right:5, fontSize:11, color:C.green, fontWeight:700}}>✓</div>
                 )}
               </div>
               {i < STAGES.length-1 && (
                 <div style={{
-                  width:14, textAlign:"center", flexShrink:0, fontSize:8,
+                  width:16, textAlign:"center", flexShrink:0, fontSize:10,
                   color: doneStages.has(STAGES[i+1].id) || activeStage===STAGES[i+1].id ? C.cyan : C.dim,
                   transition:"color 0.4s",
                 }}>→</div>
@@ -622,80 +622,80 @@ export default function Dashboard() {
 
       {/* ── NAVBAR ── */}
       <nav style={{
-        height:40, borderBottom:`1px solid ${C.border}`,
+        height:44, borderBottom:`1px solid ${C.border}`,
         display:"flex", alignItems:"center", padding:"0 18px", gap:12,
         background: C.navBg, flexShrink:0, zIndex:10,
       }}>
-        <span style={{fontSize:16,letterSpacing:6,color:C.bright,fontWeight:700}}>INORA</span>
-        <div style={{width:1,height:16,background:C.dim}}/>
+        <span style={{fontSize:18,letterSpacing:6,color:C.bright,fontWeight:700}}>INORA</span>
+        <div style={{width:1,height:18,background:C.dim}}/>
         <Label>Live Neural Interface</Label>
         <div style={{flex:1}}/>
         {connected && (<>
           <Label>Session&nbsp;</Label>
           <SessionTimer running={connected}/>
-          <div style={{width:1,height:16,background:C.dim}}/>
+          <div style={{width:1,height:18,background:C.dim}}/>
         </>)}
-        <div style={{display:"flex",alignItems:"center",gap:6}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
           <div style={{
-            width:6,height:6,borderRadius:"50%",
+            width:8,height:8,borderRadius:"50%",
             background:connected?C.green:"#ff4444",
             boxShadow:connected?`0 0 7px ${C.green}`:"0 0 7px #ff4444",
             animation:connected?"pulse 2s infinite":"none",
           }}/>
-          <span style={{fontSize:11,letterSpacing:2,color:connected?C.green:"#ff4444",fontWeight:600}}>
+          <span style={{fontSize:13,letterSpacing:2,color:connected?C.green:"#ff4444",fontWeight:600}}>
             {connected?"CONNECTED":"OFFLINE"}
           </span>
         </div>
-        <div style={{width:1,height:16,background:C.dim}}/>
+        <div style={{width:1,height:18,background:C.dim}}/>
         <button onClick={()=>setLightMode(m=>!m)} style={{
           display:"flex", alignItems:"center", gap:5,
           background: lightMode ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)",
           border:`1px solid ${C.border}`,
-          borderRadius:20, padding:"3px 10px 3px 6px",
+          borderRadius:20, padding:"3px 12px 3px 8px",
           cursor:"pointer", transition:"all 0.3s",
         }}>
-          <span style={{fontSize:13}}>{lightMode ? "🌙" : "☀️"}</span>
-          <span style={{fontSize:11, letterSpacing:2, color:C.muted, fontFamily:"monospace", fontWeight:600}}>
+          <span style={{fontSize:15}}>{lightMode ? "🌙" : "☀️"}</span>
+          <span style={{fontSize:13, letterSpacing:2, color:C.muted, fontFamily:"monospace", fontWeight:600}}>
             {lightMode ? "DARK" : "LIGHT"}
           </span>
         </button>
       </nav>
 
       {/* ── BODY: 3 COLUMNS ── */}
-      <div style={{flex:1, display:"grid", gridTemplateColumns:"190px 1fr 30vw", overflow:"hidden"}}>
+      <div style={{flex:1, display:"grid", gridTemplateColumns:"minmax(160px, 190px) 1fr minmax(320px, 390px)", overflow:"hidden", minHeight:0}}>
 
         {/* ══ LEFT ══ */}
         <div style={{
           borderRight:`1px solid ${C.border}`, display:"flex", flexDirection:"column",
           overflow:"hidden", background: C.colBg,
         }}>
-          <div style={{padding:"10px 10px 7px", borderBottom:`1px solid ${C.border}`, flexShrink:0}}>
+          <div style={{padding:"12px 12px 9px", borderBottom:`1px solid ${C.border}`, flexShrink:0}}>
             <Label>Backend Processing</Label>
           </div>
-          <div style={{flex:1, padding:"8px 8px", overflow:"hidden"}}>
+          <div style={{flex:1, padding:"10px 10px", overflow:"hidden"}}>
             <ActionLog logs={logs} lightMode={lightMode}/>
           </div>
         </div>
 
         {/* ══ CENTER ══ */}
-        <div style={{display:"flex",flexDirection:"column",overflow:"hidden",background:C.bg}}>
+        <div style={{display:"flex",flexDirection:"column",overflow:"hidden",background:C.bg,minHeight:0}}>
 
           {/* ROW 1 — EEG graphs */}
-          <div style={{padding:"8px 16px 6px", borderBottom:`1px solid ${C.border}`, flexShrink:0}}>
-            <Label style={{display:"block", marginBottom:6}}>EEG — 3 Channel Signal</Label>
+          <div style={{padding:"10px 18px 8px", borderBottom:`1px solid ${C.border}`, flexShrink:0}}>
+            <Label style={{display:"block", marginBottom:8}}>EEG — 3 Channel Signal</Label>
             <EEGWaveform eegData={eegData} active={connected} lightMode={lightMode} />
             <div style={{
-              marginTop:6, display:"flex", alignItems:"center", gap:10,
-              paddingTop:6, borderTop:`1px solid ${C.border}`,
+              marginTop:8, display:"flex", alignItems:"center", gap:12,
+              paddingTop:8, borderTop:`1px solid ${C.border}`,
             }}>
               <Label>Headset Connected</Label>
               <SessionTimer running={connected}/>
               <div style={{
-                marginLeft:"auto", display:"flex", alignItems:"center", gap:5,
-                fontSize:10, color: connected?C.green:C.orange, fontFamily:"monospace", letterSpacing:2, fontWeight:600,
+                marginLeft:"auto", display:"flex", alignItems:"center", gap:6,
+                fontSize:12, color: connected?C.green:C.orange, fontFamily:"monospace", letterSpacing:2, fontWeight:600,
               }}>
                 <div style={{
-                  width:5,height:5,borderRadius:"50%",
+                  width:6,height:6,borderRadius:"50%",
                   background:connected?C.green:C.orange,
                   boxShadow:connected?`0 0 6px ${C.green}`:`0 0 6px ${C.orange}`,
                   animation:connected?"pulse 2s infinite":"none",
@@ -708,16 +708,16 @@ export default function Dashboard() {
           {/* ROW 2 — Intent + Avatar */}
           <div style={{
             display:"flex", gap:0, borderBottom:`1px solid ${C.border}`,
-            flex:"0 0 180px",
+            flex:"0 0 155px",
           }}>
             <div style={{
-              width:200, padding:"16px 16px",
+              width:200, padding:"10px 14px",
               borderRight:`1px solid ${C.border}`,
-              display:"flex", flexDirection:"column", justifyContent:"center", gap:10,
+              display:"flex", flexDirection:"column", justifyContent:"center", gap:8,
             }}>
               <Label>Intent</Label>
               <div style={{
-                fontSize:24, letterSpacing:4, fontWeight:700,
+                fontSize:26, letterSpacing:4, fontWeight:700,
                 color:intentColor, lineHeight:1,
                 textShadow: intent!=="IDLE" ? `0 0 16px ${intentColor}88` : "none",
                 transition:"color 0.5s",
@@ -728,26 +728,26 @@ export default function Dashboard() {
             <div style={{
               flex:1, display:"flex", flexDirection:"column",
               alignItems:"center", justifyContent:"center",
-              padding:"10px 10px", gap:6, overflow:"hidden",
+              padding:"8px 10px", gap:4, overflow:"hidden",
             }}>
               <Label>AI Agent</Label>
               <div style={{
                 position:"relative",
                 border:`1px solid ${connected?(isSpeaking?C.green:C.cyan)+"33":C.dim}`,
-                borderRadius:12,
+                borderRadius:14,
                 boxShadow: isSpeaking ? `0 0 30px ${C.green}22` : "none",
                 transition:"all 0.5s", overflow:"hidden", lineHeight:0,
               }}>
                 {isSpeaking && (
                   <div style={{
-                    position:"absolute",inset:-7,borderRadius:"50%",
+                    position:"absolute",inset:-8,borderRadius:"50%",
                     border:`1px dashed ${C.green}44`,
                     animation:"spin 4s linear infinite",
                   }}/>
                 )}
                 <Avatar speaking={audioPlaying} scale={0.45}/>
               </div>
-              <span style={{fontSize:10,letterSpacing:3,color:isSpeaking?C.green:connected?C.cyan:C.dim,fontWeight:600}}>
+              <span style={{fontSize:12,letterSpacing:3,color:isSpeaking?C.green:connected?C.cyan:C.dim,fontWeight:600}}>
                 {isSpeaking?"● SPEAKING":connected?"◌ LISTENING":"◌ OFFLINE"}
               </span>
             </div>
@@ -765,33 +765,33 @@ export default function Dashboard() {
           {/* ROW 3 */}
           <div style={{flex:1, display:"flex", gap:0, overflow:"hidden", minHeight:0}}>
             <div style={{
-              flex:1, padding:"8px 12px",
+              flex:1, padding:"10px 14px",
               borderRight:`1px solid ${C.border}`,
-              display:"flex", flexDirection:"column", gap:6, overflow:"hidden",
+              display:"flex", flexDirection:"column", gap:8, overflow:"hidden",
             }}>
               <Label>Recorded Input</Label>
-              <Panel style={{ flex:1, padding:"10px 12px", overflow:"hidden" }}>
+              <Panel style={{ flex:1, padding:"12px 14px", overflow:"hidden" }}>
                 {question
-                  ? <p style={{margin:0,fontSize:13,color:C.blue,lineHeight:1.6,fontWeight:500}}>{question}</p>
-                  : <p style={{margin:0,fontSize:12,color:C.muted,fontStyle:"italic"}}>Awaiting voice input…</p>
+                  ? <p style={{margin:0,fontSize:15,color:C.blue,lineHeight:1.6,fontWeight:500}}>{question}</p>
+                  : <p style={{margin:0,fontSize:14,color:C.muted,fontStyle:"italic"}}>Awaiting voice input…</p>
                 }
               </Panel>
             </div>
             <div style={{
-              flex:1, padding:"8px 12px",
+              flex:1, padding:"10px 14px",
               borderRight:`1px solid ${C.border}`,
-              display:"flex", flexDirection:"column", gap:6, overflow:"hidden",
+              display:"flex", flexDirection:"column", gap:8, overflow:"hidden",
             }}>
               <Label>Backend Output</Label>
               <Panel style={{
-                flex:1, padding:"10px 12px", overflow:"hidden",
+                flex:1, padding:"12px 14px", overflow:"hidden",
                 border:`1px solid ${sentence ? C.green+"28" : C.border}`,
                 boxShadow: sentence ? `0 0 16px ${C.green}0a` : "none",
                 transition:"all 0.4s",
               }}>
                 {sentence
-                  ? <p style={{margin:0,fontSize:13,color:C.green,lineHeight:1.6,fontWeight:500}}>{sentence}</p>
-                  : <p style={{margin:0,fontSize:12,color:C.muted,fontStyle:"italic"}}>Awaiting neural signal…</p>
+                  ? <p style={{margin:0,fontSize:15,color:C.green,lineHeight:1.6,fontWeight:500}}>{sentence}</p>
+                  : <p style={{margin:0,fontSize:14,color:C.muted,fontStyle:"italic"}}>Awaiting neural signal…</p>
                 }
               </Panel>
             </div>
@@ -821,33 +821,33 @@ export default function Dashboard() {
         {/* ══ RIGHT COLUMN ══ */}
         <div style={{
           borderLeft:`1px solid ${C.border}`, display:"flex", flexDirection:"column",
-          background: C.colBg, overflowY:"auto", overflowX:"hidden",
+          background: C.colBg, overflow:"hidden",
         }}>
           <div style={{
-            padding:"10px 14px 8px", borderBottom:`1px solid ${C.border}`,
-            display:"flex", flexDirection:"column", alignItems:"center", gap:8,
-            flexShrink:0, height:"58vh", justifyContent:"center",
+            padding:"8px 12px 6px", borderBottom:`1px solid ${C.border}`,
+            display:"flex", flexDirection:"column", alignItems:"center", gap:6,
+            flexShrink:0, width:"100%", maxHeight:"30vh", aspectRatio:"1 / 1", justifyContent:"center",
           }}>
             <div style={{width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
               <Label>Brain Activity</Label>
-              <div style={{fontSize:10,color:connected&&intent!=="IDLE"?C.green:C.dim,letterSpacing:2,fontFamily:"monospace",fontWeight:600}}>
+              <div style={{fontSize:12,color:connected&&intent!=="IDLE"?C.green:C.dim,letterSpacing:2,fontFamily:"monospace",fontWeight:600}}>
                 {connected&&intent!=="IDLE"?"● ACTIVE":"◌ STANDBY"}
               </div>
             </div>
             <div style={{flex:1, width:"100%", display:"flex", alignItems:"center", justifyContent:"center", minHeight:0, overflow:"hidden"}}>
-              <div style={{width:"100%", height:"100%", maxHeight:"calc(58vh - 60px)"}}>
+              <div style={{width:"100%", height:"100%"}}>
                 <BrainMRI rmsVals={rmsVals} lightMode={lightMode}/>
               </div>
             </div>
           </div>
 
-          <div style={{flex:1, padding:"10px 14px", display:"flex", flexDirection:"column", gap:8, overflow:"auto", scrollbarWidth:"none"}}>
+          <div style={{flex:1, padding:"8px 12px", display:"flex", flexDirection:"column", gap:5, overflow:"hidden", minHeight:0}}>
             <Label>Signal Quality</Label>
             {[{l:"Alpha",v:0.82,c:C.cyan},{l:"Beta",v:0.61,c:C.green},{l:"Theta",v:0.44,c:C.yellow}].map(b=>(
               <div key={b.l}>
-                <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
-                  <span style={{fontSize:12,color:C.muted,fontFamily:"monospace",fontWeight:600}}>{b.l}</span>
-                  <span style={{fontSize:12,color:b.c,fontFamily:"monospace",fontWeight:700}}>{Math.round(b.v*100)}%</span>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:2}}>
+                  <span style={{fontSize:13,color:C.muted,fontFamily:"monospace",fontWeight:600}}>{b.l}</span>
+                  <span style={{fontSize:13,color:b.c,fontFamily:"monospace",fontWeight:700}}>{Math.round(b.v*100)}%</span>
                 </div>
                 <div style={{height:2, background: lightMode ? "rgba(0,0,40,0.1)" : "rgba(0,0,0,0.4)", borderRadius:1}}>
                   <div style={{height:"100%",width:`${b.v*100}%`,background:b.c,borderRadius:1,boxShadow:`0 0 6px ${b.c}66`}}/>
@@ -855,8 +855,8 @@ export default function Dashboard() {
               </div>
             ))}
 
-            <div style={{marginTop:6, borderTop:`1px solid ${C.border}`, paddingTop:10}}>
-              <Label style={{display:"block", marginBottom:10}}>Pipeline Status</Label>
+            <div style={{marginTop:4, borderTop:`1px solid ${C.border}`, paddingTop:6}}>
+              <Label style={{display:"block", marginBottom:6}}>Pipeline Status</Label>
               {[
                 { stage:"Brain",    desc:"EEG hardware input",    active: connected },
                 { stage:"Signal",   desc:"Raw signal received",   active: connected },
@@ -869,9 +869,9 @@ export default function Dashboard() {
                 const col = s.active ? C.green : C.dim;
                 return (
                   <div key={s.stage} style={{display:"flex", gap:0, alignItems:"stretch"}}>
-                    <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:18, flexShrink:0}}>
+                    <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:16, flexShrink:0}}>
                       <div style={{
-                        width:8, height:8, borderRadius:"50%", flexShrink:0, marginTop:3,
+                        width:7, height:7, borderRadius:"50%", flexShrink:0, marginTop:3,
                         background: s.active ? col : "transparent",
                         border:`1.5px solid ${col}`,
                         boxShadow: s.active ? `0 0 6px ${col}` : "none",
@@ -879,18 +879,18 @@ export default function Dashboard() {
                       }}/>
                       {i < arr.length-1 && (
                         <div style={{
-                          width:1, flex:1, minHeight:10,
+                          width:1, flex:1, minHeight:6,
                           background: s.active ? `${col}66` : `${C.dim}33`,
                           transition:"background 0.4s",
                         }}/>
                       )}
                     </div>
-                    <div style={{paddingLeft:8, paddingBottom:10}}>
-                      <div style={{fontSize:12, letterSpacing:2, color:col, fontFamily:"monospace", transition:"color 0.4s", fontWeight:700}}>
+                    <div style={{paddingLeft:6, paddingBottom:3}}>
+                      <div style={{fontSize:13, letterSpacing:2, color:col, fontFamily:"monospace", transition:"color 0.4s", fontWeight:700}}>
                         {s.stage}
-                        {s.active && <span style={{marginLeft:6, fontSize:8, color:`${col}99`}}>●</span>}
+                        {s.active && <span style={{marginLeft:6, fontSize:9, color:`${col}99`}}>●</span>}
                       </div>
-                      <div style={{fontSize:10, color: s.active ? C.text : C.dim, marginTop:1, fontWeight:500}}>{s.desc}</div>
+                      <div style={{fontSize:11, color: s.active ? C.text : C.dim, marginTop:0, fontWeight:500}}>{s.desc}</div>
                     </div>
                   </div>
                 );
@@ -898,8 +898,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{padding:"16px 14px", borderTop:`1px solid ${C.border}`, flexShrink:0}}>
-            <Label style={{display:"block",marginBottom:10}}>I/O Monitor</Label>
+          <div style={{padding:"8px 12px", borderTop:`1px solid ${C.border}`, flexShrink:0}}>
+            <Label style={{display:"block",marginBottom:4}}>I/O Monitor</Label>
             <div style={{display:"flex",gap:20,justifyContent:"center"}}>
               <ReactiveIcon emoji="🎙" label="MIC IN"  active={connected && !audioPlaying} lightMode={lightMode}/>
               <ReactiveIcon emoji="🔊" label="SPK OUT" active={isSpeaking}  lightMode={lightMode}/>
@@ -917,8 +917,8 @@ export default function Dashboard() {
         <Label>Pipeline</Label>
         {["Brain","Signal","Filter","Classify","NLP","Speech","Action"].map((s,i,arr)=>(
           <React.Fragment key={s}>
-            <span style={{fontSize:11,letterSpacing:2,color:connected?C.green:C.dim,transition:"color 0.4s",fontWeight:600}}>{s}</span>
-            {i<arr.length-1 && <span style={{color:C.dim,fontSize:8}}>→</span>}
+            <span style={{fontSize:13,letterSpacing:2,color:connected?C.green:C.dim,transition:"color 0.4s",fontWeight:600}}>{s}</span>
+            {i<arr.length-1 && <span style={{color:C.dim,fontSize:10}}>→</span>}
           </React.Fragment>
         ))}
         <div style={{flex:1}}/>

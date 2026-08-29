@@ -78,7 +78,7 @@ function drawYAxis(ctx, W, H, yRange, color, lightMode) {
     if (yRange / c <= 5) { tickInterval = c; break; }
   }
 
-  ctx.font = "bold 7.5px 'Courier New', monospace";
+  ctx.font = "bold 8px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "right";
   ctx.textBaseline = "middle";
 
@@ -115,7 +115,7 @@ function drawYAxis(ctx, W, H, yRange, color, lightMode) {
   ctx.save();
   ctx.translate(7, H / 2);
   ctx.rotate(-Math.PI / 2);
-  ctx.font = "6.5px 'Courier New', monospace";
+  ctx.font = "7px system-ui, -apple-system, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillStyle = labelCol;
@@ -133,7 +133,7 @@ function Channel({ ch, buf, hasLive, isConnected, lightMode, scaleIdxRef, select
   const tRef      = useRef(Math.random() * 100);
   const phaseRef  = useRef(ch * 1.1 + Math.random() * 0.3);
   const COLOR     = (lightMode ? COLORS_LIGHT : COLORS_DARK)[ch];
-  const H_CANVAS  = selected ? 108 : 78;
+  const H_CANVAS  = selected ? 56 : 40;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -296,14 +296,14 @@ function Channel({ ch, buf, hasLive, isConnected, lightMode, scaleIdxRef, select
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: 1.5,
+            fontSize: 15, fontWeight: 700, letterSpacing: 1.5,
             color: lightMode ? "#111" : "#cde", fontFamily: "monospace",
           }}>
             {LABELS[ch]}
           </span>
           {selected && (
             <span style={{
-              fontSize: 8, fontFamily: "monospace", letterSpacing: 1.5,
+              fontSize: 12, fontFamily: "monospace", letterSpacing: 1.5,
               color: COLOR, background: COLOR + "18",
               border: `1px solid ${COLOR}44`,
               borderRadius: 3, padding: "1px 5px",
@@ -312,7 +312,7 @@ function Channel({ ch, buf, hasLive, isConnected, lightMode, scaleIdxRef, select
             </span>
           )}
         </div>
-        <span style={{ fontSize: 8, color: muted, letterSpacing: 1.2, fontFamily: "monospace" }}>
+        <span style={{ fontSize: 10, color: muted, letterSpacing: 1.2, fontFamily: "monospace" }}>
           HP 0.5Hz · LP 45Hz · Notch 50Hz
         </span>
       </div>
@@ -360,7 +360,7 @@ function RMSBar({ ch, buf, color, lightMode, bg, muted }) {
       display: "flex", alignItems: "center", gap: 7,
       padding: "3px 10px 4px", background: bg,
     }}>
-      <span style={{ fontSize: 7, color: muted, letterSpacing: 2, textTransform: "uppercase", fontFamily: "monospace" }}>
+      <span style={{ fontSize: 9, color: muted, letterSpacing: 2, textTransform: "uppercase", fontFamily: "monospace" }}>
         rms
       </span>
       <div style={{
@@ -374,8 +374,8 @@ function RMSBar({ ch, buf, color, lightMode, bg, muted }) {
           transition: "width 0.35s ease",
         }} />
       </div>
-      <span ref={qualRef} style={{ fontSize: 8, color: muted, minWidth: 52, fontFamily: "monospace" }}>—</span>
-      <span ref={valRef}  style={{ fontSize: 8, color, minWidth: 52, textAlign: "right", fontFamily: "monospace" }}>—</span>
+      <span ref={qualRef} style={{ fontSize: 10, color: muted, minWidth: 52, fontFamily: "monospace" }}>—</span>
+      <span ref={valRef}  style={{ fontSize: 10, color, minWidth: 52, textAlign: "right", fontFamily: "monospace" }}>—</span>
     </div>
   );
 }
@@ -392,10 +392,10 @@ function ScaleHUD({ scaleIdx, lightMode }) {
       display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
       padding: "5px 12px", borderRadius: 6,
       background: bg, border: `1px solid ${bdr}`,
-      fontFamily: "'Courier New', monospace",
+      fontFamily: "system-ui, -apple-system, sans-serif",
     }}>
-      <span style={{ fontSize: 9, letterSpacing: 2, color: muted, textTransform: "uppercase" }}>Scale</span>
-      <span style={{ fontSize: 14, fontWeight: 700, color: accent, minWidth: 64 }}>
+      <span style={{ fontSize: 11, letterSpacing: 2, color: muted, textTransform: "uppercase" }}>Scale</span>
+      <span style={{ fontSize: 16, fontWeight: 700, color: accent, minWidth: 64 }}>
         ±{SCALE_STEPS[scaleIdx]} µV
       </span>
 
@@ -416,9 +416,9 @@ function ScaleHUD({ scaleIdx, lightMode }) {
 
       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
         <Kbd>↑</Kbd>
-        <span style={{ fontSize: 8, color: muted }}>zoom in</span>
+        <span style={{ fontSize: 10, color: muted }}>zoom in</span>
         <Kbd>↓</Kbd>
-        <span style={{ fontSize: 8, color: muted }}>zoom out</span>
+        <span style={{ fontSize: 10, color: muted }}>zoom out</span>
       </div>
 
       <div style={{ width: 1, height: 14, background: bdr }} />
@@ -427,7 +427,7 @@ function ScaleHUD({ scaleIdx, lightMode }) {
         {[["A","Ch1"],["S","Ch2"],["D","Ch3"]].map(([k,l]) => (
           <span key={k} style={{ display: "flex", alignItems: "center", gap: 3 }}>
             <Kbd>{k}</Kbd>
-            <span style={{ fontSize: 8, color: muted }}>{l}</span>
+            <span style={{ fontSize: 10, color: muted }}>{l}</span>
           </span>
         ))}
       </div>
@@ -440,7 +440,7 @@ function Kbd({ children }) {
     <span style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center",
       minWidth: 17, height: 15, padding: "0 3px",
-      fontSize: 8, fontFamily: "'Courier New', monospace", fontWeight: 700,
+      fontSize: 10, fontFamily: "'Courier New', monospace", fontWeight: 700,
       background: "rgba(255,255,255,0.07)",
       border: "1px solid rgba(255,255,255,0.16)",
       borderBottom: "2px solid rgba(0,0,0,0.25)",

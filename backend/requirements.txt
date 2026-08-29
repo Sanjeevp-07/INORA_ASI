@@ -6,7 +6,6 @@ mne
 scikit-learn
 sqlalchemy
 pydantic
-openai-whisper
 pyttsx3
 soundfile
 python-multipart
@@ -16,6 +15,6 @@ joblib
 sounddevice
 pydub
 loguru
+faster-whisper
 edge-tts
-
-openai-whisper soundfile 
+pyserial
